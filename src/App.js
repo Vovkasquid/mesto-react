@@ -1,9 +1,10 @@
 import logo from './logo.svg';
-import './App.css';
+import './index.css';
 
 function App() {
   return (
     <div className="App">
+      <div className="page">
       <header className="header page__header">
         <img src='./images/logo_mesto.svg' alt="Логотип соцсети Место" className="logo"/>
       </header>
@@ -83,6 +84,7 @@ function App() {
           <button aria-label="Закрыть" type="button" className="popup__close-btn image-popup__close-button"></button>
        </div>
       </div>
+    </div>
     </div>
   );
 }
