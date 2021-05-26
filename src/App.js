@@ -4,6 +4,7 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 import PopupWithForm from './components/PopupWithForm';
 import ImagePopup from './components/ImagePopup';
+import React from 'react';
 
 function App() {
   //Объявляем константы для пропсов PopupWithForm
@@ -47,31 +48,38 @@ function App() {
 
   //Колбеки открытия поппов редактирования Аватара, профиля и добавления нового места
   const handleEditAvatarClick = () => {
-    const editAvatarPopup = document.querySelector('.edit-form_type_avatar');
-    editAvatarPopup.classList.add('popup_status_active');
+    setIsEditAvatarPopupOpen(true);
+    //const editAvatarPopup = document.querySelector('.edit-form_type_avatar');
+    //editAvatarPopup.classList.add('popup_status_active');
   }
 
   const handleEditProfileClick = () => {
-    const editProfilePopup = document.querySelector('.edit-form_type_profile');
-    editProfilePopup.classList.add('popup_status_active');
+    setIsEditProfilePopupOpen(true);
+    //const editProfilePopup = document.querySelector('.edit-form_type_profile');
+    //editProfilePopup.classList.add('popup_status_active');
   }
 
   const handleAddPlaceClick = () => {
-    const addPlacePopup = document.querySelector('.edit-form_type_place');
-    addPlacePopup.classList.add('popup_status_active');
+    setIsAddPlacePopupOpen(true);
+    //const addPlacePopup = document.querySelector('.edit-form_type_place');
+    //addPlacePopup.classList.add('popup_status_active');
   }
+
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
   return (
     <div className="App">
       <div className="page">
-      <Header />
+      <Header/>
       <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick}/>
-      <Footer />
+      <Footer/>
 
-      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} />
-      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} />
+      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen}/>
+      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen}/>
       <PopupWithForm name='delete' title='Вы уверены?' children={deleteCardPopupChildren} />
-      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} />
+      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen}/>
       <ImagePopup />
       </div>
     </div>
