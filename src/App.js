@@ -1,39 +1,15 @@
-import logo from './images/logo_mesto.svg';
 import './index.css';
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <div className="App">
       <div className="page">
-      <header className="header page__header">
-        <img src={logo} alt="Логотип соцсети Место" className="logo"/>
-      </header>
-
-      <main className="content">
-        <section className="profile">
-          <div className="profile__person">
-            <div className="profile__avatar">
-              <div className="profile__overlay"></div>
-            </div>
-            <div className="profile__info">
-              <div className="profile__name-container">
-                <h1 className="profile__name">Владимир Блинов</h1>
-                <button aria-label="Редактировать профиль" type="button" className="profile__edit-button"></button>
-              </div>
-              <p className="profile__description">Капитан очень ближнего плавания</p>
-            </div>
-          </div>
-          <button aria-label="Добавить новое фото" type="button" className="profile__new-photo-button"></button>
-        </section>
-
-        <section className="content-gallery">
-          <ul className="content-gallery__cards"></ul>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <p className="footer__copyright">&copy; 2020 Mesto Russia</p>
-      </footer>
+      <Header />
+      <Main />
+      <Footer />
 
       <div className="popup edit-form edit-form_type_profile">
         <form name="editProfileForm" className="edit-form__form-container" noValidate>
