@@ -45,11 +45,27 @@ function App() {
     </>
   );
 
+  //Колбеки открытия поппов редактирования Аватара, профиля и добавления нового места
+  const handleEditAvatarClick = () => {
+    const editAvatarPopup = document.querySelector('.edit-form_type_avatar');
+    editAvatarPopup.classList.add('popup_status_active');
+  }
+
+  const handleEditProfileClick = () => {
+    const editProfilePopup = document.querySelector('.edit-form_type_profile');
+    editProfilePopup.classList.add('popup_status_active');
+  }
+
+  const handleAddPlaceClick = () => {
+    const addPlacePopup = document.querySelector('.edit-form_type_place');
+    addPlacePopup.classList.add('popup_status_active');
+  }
+
   return (
     <div className="App">
       <div className="page">
       <Header />
-      <Main />
+      <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick}/>
       <Footer />
 
       <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} />
