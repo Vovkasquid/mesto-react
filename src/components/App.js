@@ -73,7 +73,6 @@ function App() {
       <Header/>
       <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
       <Footer/>
-
       <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
         {editProfilePopupChildren}
       </PopupWithForm>

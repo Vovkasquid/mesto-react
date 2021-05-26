@@ -54,7 +54,9 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       <section className="content-gallery">
         <ul className="content-gallery__cards">
           {cards.map((card) => {
-            return <Card card={card} key={card._id} onCardClick={onCardClick}/>
+            return (
+            <Card card={card} key={card._id} onCardClick={onCardClick}/>
+            )
           })}
         </ul>
       </section>
