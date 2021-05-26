@@ -74,10 +74,16 @@ function App() {
       <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
       <Footer/>
 
-      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}/>
-      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}/>
-      <PopupWithForm name='delete' title='Вы уверены?' children={''} onClose={closeAllPopups} buttonText={'Да'}/>
-      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}/>
+      <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+        {editProfilePopupChildren}
+      </PopupWithForm>
+      <PopupWithForm name='place' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+        {addPlacePopupChildren}
+      </PopupWithForm>
+      <PopupWithForm name='delete' title='Вы уверены?' onClose={closeAllPopups} buttonText={'Да'}/>
+      <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+        {editAvatarPopupChildren}
+      </PopupWithForm>
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
       </div>
     </div>
