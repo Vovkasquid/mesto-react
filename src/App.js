@@ -45,8 +45,6 @@ function App() {
   //Колбеки открытия поппов редактирования Аватара, профиля и добавления нового места
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-    //const editAvatarPopup = document.querySelector('.edit-form_type_avatar');
-    //editAvatarPopup.classList.add('popup_status_active');
   }
 
   const handleEditProfileClick = () => {
@@ -62,25 +60,34 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard(null);
   }
 
+  //Колбек установки карточки для фул-вью попапа
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+  }
+
+  //Джеб-джеб, уход под левую, хук правой (в стойке левши, конечно)
+  //Создаём переменные состояния для попапов с помощью хуков
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   //Возвращаем разметку всей страницы
   return (
     <div className="App">
       <div className="page">
       <Header/>
-      <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick}/>
+      <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
       <Footer/>
 
       <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
       <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}/>
       <PopupWithForm name='delete' title='Вы уверены?' children={deleteCardPopupChildren} onClose={closeAllPopups}/>
       <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
       </div>
     </div>
   );

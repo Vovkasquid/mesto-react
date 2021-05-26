@@ -2,7 +2,7 @@ import React from 'react';
 import api from '../utils/Api';
 import Card from './Card';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   //Объявляем переменные состояния
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
@@ -54,7 +54,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
       <section className="content-gallery">
         <ul className="content-gallery__cards">
           {cards.map((card) => {
-            return <Card card={card} key={card._id}/>
+            return <Card card={card} key={card._id} onCardClick={onCardClick}/>
           })}
         </ul>
       </section>

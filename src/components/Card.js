@@ -1,9 +1,9 @@
 import React from "react";
 
-function Card({card}) {
+function Card({card, onCardClick}) {
   return (
     <li className="card">
-      <img src={card.link} alt={card.name} className="card__photo"/>
+      <img src={card.link} alt={card.name} className="card__photo" onClick={() => onCardClick(card)}/>
       <div className="card__info">
         <h2 className="card__description">{card.name}</h2>
         <div className="card__like-container">
