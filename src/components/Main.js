@@ -56,7 +56,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
           {cards.map((card) => {
             return (
             <Card card={card} key={card._id} onCardClick={onCardClick}/>
-            )
+            );
           })}
         </ul>
       </section>
