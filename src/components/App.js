@@ -7,6 +7,13 @@ import ImagePopup from './ImagePopup';
 import React from 'react';
 
 function App() {
+  //Джеб-джеб, уход под левую, хук правой (в стойке левши, конечно)
+  //Создаём переменные состояния для попапов с помощью хуков
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
+
   //Объявляем константы для пропсов PopupWithForm
   const editProfilePopupChildren = (
     <>
@@ -58,13 +65,6 @@ function App() {
   const handleCardClick = (card) => {
     setSelectedCard(card);
   }
-
-  //Джеб-джеб, уход под левую, хук правой (в стойке левши, конечно)
-  //Создаём переменные состояния для попапов с помощью хуков
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
 
   //Возвращаем разметку всей страницы
   return (
