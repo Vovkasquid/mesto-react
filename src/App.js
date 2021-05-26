@@ -51,14 +51,10 @@ function App() {
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
-    //const editProfilePopup = document.querySelector('.edit-form_type_profile');
-    //editProfilePopup.classList.add('popup_status_active');
   }
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
-    //const addPlacePopup = document.querySelector('.edit-form_type_place');
-    //addPlacePopup.classList.add('popup_status_active');
   }
 
   //Колбек для закрытия попапов
@@ -72,6 +68,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
+  //Возвращаем разметку всей страницы
   return (
     <div className="App">
       <div className="page">
