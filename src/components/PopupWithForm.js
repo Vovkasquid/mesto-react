@@ -4,7 +4,7 @@ function PopupWithForm({name, title, isOpen, onClose, children, buttonText}) {
   // В children автоматически вставится код
   // Который будет указан между тегами компонента в App
   return (
-    <div className={isOpen ? `popup edit-form edit-form_type_${name} popup_status_active` : `popup edit-form edit-form_type_${name}`}>
+    <div className={`${isOpen && `popup_status_active`} popup edit-form edit-form_type_${name}`}>
       <form name="editProfileForm" className="edit-form__form-container" noValidate>
         <h2 className="edit-form__form-description">{title}</h2>
         {children}
