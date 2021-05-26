@@ -6,6 +6,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
 
   //При монтировании компонента вызовется этот хук
   //В нём произведём запрос на сервер, чтобы получить новые данные
@@ -17,20 +18,20 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
       api.getUserInformation(),
       api.getInitialCards()
     ])
-      .then(([userData, cards])=>{
+      .then(([userData, cardsList])=>{
         //Попадаем сюда, только когда оба промиса будут выполнены
         //Устанавливаем полученные данные пользователя
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
-        //updateUserInformation(values[0].name, values[0].about, values[0].avatar, values[0]._id);
-        //Рендерим полученные карточки
-        //section.renderAllElements(values[1].reverse());
+        //Передаём карточки в стейт cards
+        console.log(cardsList[0]);
+        setCards(cardsList);
       })
       .catch((err)=>{
         console.log(err);
       })
-  });
+  }, []);
 
   return (
     <main className="content">
@@ -51,7 +52,23 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
       </section>
 
       <section className="content-gallery">
-        <ul className="content-gallery__cards"></ul>
+        <ul className="content-gallery__cards">
+          {cards.map((card) => {
+            return (
+              <li key={card._id} className="card">
+                <img src={card.link} alt={card.name} className="card__photo"/>
+                  <div className="card__info">
+                    <h2 className="card__description">{card.name}</h2>
+                    <div className="card__like-container">
+                      <button aria-label="Нравится" type="button" className="card__like-button"></button>
+                      <p className="card__like-counter">{card.likes.length}</p>
+                    </div>
+                  </div>
+                  <button aria-label="Удалить место" type="button" className="card__delete-button"></button>
+              </li>)
+            })};
+
+        </ul>
       </section>
     </main>
   );
