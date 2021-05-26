@@ -1,6 +1,8 @@
 import React from "react";
 
-function PopupWithForm({name, title, children, isOpen, onClose, buttonText}) {
+function PopupWithForm({name, title, isOpen, onClose, children, buttonText}) {
+  // В children автоматически вставится код
+  // Который будет указан между тегами компонента в App
   return (
     <div className={isOpen ? `popup edit-form edit-form_type_${name} popup_status_active` : `popup edit-form edit-form_type_${name}`}>
       <form name="editProfileForm" className="edit-form__form-container" noValidate>
