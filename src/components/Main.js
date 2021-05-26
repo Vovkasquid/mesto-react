@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../utils/Api';
+import Card from './Card';
 
 function Main({onEditProfile, onAddPlace, onEditAvatar}) {
   //Объявляем переменные состояния
@@ -25,7 +26,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
         //Передаём карточки в стейт cards
-        console.log(cardsList[0]);
         setCards(cardsList);
       })
       .catch((err)=>{
@@ -54,20 +54,8 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
       <section className="content-gallery">
         <ul className="content-gallery__cards">
           {cards.map((card) => {
-            return (
-              <li key={card._id} className="card">
-                <img src={card.link} alt={card.name} className="card__photo"/>
-                  <div className="card__info">
-                    <h2 className="card__description">{card.name}</h2>
-                    <div className="card__like-container">
-                      <button aria-label="Нравится" type="button" className="card__like-button"></button>
-                      <p className="card__like-counter">{card.likes.length}</p>
-                    </div>
-                  </div>
-                  <button aria-label="Удалить место" type="button" className="card__delete-button"></button>
-              </li>)
-            })};
-
+            return <Card card={card} key={card._id}/>
+          })}
         </ul>
       </section>
     </main>
