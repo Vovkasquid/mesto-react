@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
 import PopupWithForm from './components/PopupWithForm';
+import ImagePopup from './components/ImagePopup';
 
 function App() {
   //Объявляем константы для пропсов PopupWithForm
@@ -50,20 +51,13 @@ function App() {
       <Header />
       <Main />
       <Footer />
-        
+
       <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} />
       <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} />
       <PopupWithForm name='delete' title='Вы уверены?' children={deleteCardPopupChildren} />
       <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} />
-
-      <div className="popup image-popup">
-        <div className="image-popup__container">
-          <img src="#" alt="#" className="image-popup__picture"/>
-          <p className="image-popup__description">Вантовый мост</p>
-          <button aria-label="Закрыть" type="button" className="popup__close-btn image-popup__close-button"></button>
-       </div>
+      <ImagePopup />
       </div>
-    </div>
     </div>
   );
 }
