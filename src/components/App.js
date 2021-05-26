@@ -14,7 +14,6 @@ function App() {
       <span className="edit-form__error-text name-input-error"></span>
       <input type="text" name="editProfileDescription" id="description-input" className="edit-form__info-input edit-form__info-input_type_description" placeholder="Описание"  required minLength="2" maxLength="200"/>
       <span className="edit-form__error-text description-input-error"></span>
-      <button aria-label="Сохранить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_profile">Сохранить</button>
     </>
   );
 
@@ -24,7 +23,6 @@ function App() {
       <span className="edit-form__error-text place-input-error"></span>
       <input type="url" name="editLinkPlace" id="url-input" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на картинку"  required/>
       <span className="edit-form__error-text url-input-error"></span>
-      <button aria-label="Сохранить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_place">Создать</button>
     </>
   );
 
@@ -32,13 +30,6 @@ function App() {
     <>
       <input type="url" name="editLinkAvatar" id="url-input-avatar" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на аватар"  required/>
       <span className="edit-form__error-text url-input-avatar-error"></span>
-      <button aria-label="Сохранить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_place">Сохранить</button>
-    </>
-  );
-
-  const deleteCardPopupChildren = (
-    <>
-      <button aria-label="Удалить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_delete">Да</button>
     </>
   );
 
@@ -83,10 +74,10 @@ function App() {
       <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
       <Footer/>
 
-      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
-      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}/>
-      <PopupWithForm name='delete' title='Вы уверены?' children={deleteCardPopupChildren} onClose={closeAllPopups}/>
-      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
+      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}/>
+      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}/>
+      <PopupWithForm name='delete' title='Вы уверены?' children={''} onClose={closeAllPopups} buttonText={'Да'}/>
+      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}/>
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
       </div>
     </div>
