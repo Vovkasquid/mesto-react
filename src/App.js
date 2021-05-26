@@ -15,7 +15,6 @@ function App() {
       <input type="text" name="editProfileDescription" id="description-input" className="edit-form__info-input edit-form__info-input_type_description" placeholder="Описание" value="" required minLength="2" maxLength="200"/>
       <span className="edit-form__error-text description-input-error"></span>
       <button aria-label="Сохранить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_profile">Сохранить</button>
-      <button aria-label="Закрыть" type="button" className="popup__close-btn edit-form__close-button edit-form__close-button_type_profile"></button>
     </>
   );
 
@@ -26,7 +25,6 @@ function App() {
       <input type="url" name="editLinkPlace" id="url-input" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на картинку" value="" required/>
       <span className="edit-form__error-text url-input-error"></span>
       <button aria-label="Сохранить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_place">Создать</button>
-      <button aria-label="Закрыть" type="button" className="popup__close-btn edit-form__close-button edit-form__close-button_type_place"></button>
     </>
   );
 
@@ -35,14 +33,12 @@ function App() {
       <input type="url" name="editLinkAvatar" id="url-input-avatar" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на аватар" value="" required/>
       <span className="edit-form__error-text url-input-avatar-error"></span>
       <button aria-label="Сохранить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_place">Сохранить</button>
-      <button aria-label="Закрыть" type="button" className="popup__close-btn edit-form__close-button edit-form__close-button_type_place"></button>
     </>
   );
 
   const deleteCardPopupChildren = (
     <>
       <button aria-label="Удалить" type="submit" className="edit-form__submit-button edit-form__submit-button_type_delete">Да</button>
-      <button aria-label="Закрыть" type="button" className="popup__close-btn edit-form__close-button edit-form__close-button_type_place"></button>
     </>
   );
 
@@ -65,6 +61,13 @@ function App() {
     //addPlacePopup.classList.add('popup_status_active');
   }
 
+  //Колбек для закрытия попапов
+  const closeAllPopups = () => {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+  }
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -76,10 +79,10 @@ function App() {
       <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick}/>
       <Footer/>
 
-      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen}/>
-      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen}/>
-      <PopupWithForm name='delete' title='Вы уверены?' children={deleteCardPopupChildren} />
-      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen}/>
+      <PopupWithForm name='profile' title='Редактировать профиль' children={editProfilePopupChildren} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
+      <PopupWithForm name='place' title='Новое место' children={addPlacePopupChildren} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}/>
+      <PopupWithForm name='delete' title='Вы уверены?' children={deleteCardPopupChildren} onClose={closeAllPopups}/>
+      <PopupWithForm name='avatar' title='Обновить аватар' children={editAvatarPopupChildren} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
       <ImagePopup />
       </div>
     </div>
