@@ -5,6 +5,8 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import React from 'react';
+import api from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   //Джеб-джеб, уход под левую, хук правой (в стойке левши, конечно)
@@ -13,6 +15,27 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState([]);
+
+  //При монтировании компонента вызовется этот хук
+  //В нём произведём запрос на сервер, чтобы получить новые данные
+  React.useEffect(() => {
+    Promise.all([
+      //Передаём Массив промисов, которые необходимо выполнить
+      //Ответ будет в массиве данных, по порядку написания промисов
+      //Но не по порядку их выполнения
+      api.getUserInformation(),
+      api.getInitialCards()
+    ])
+      .then(([userData, cardsList])=>{
+        //Попадаем сюда, только когда оба промиса будут выполнены
+        //Записывам полученные данные промиса в стейт currentUser
+        setCurrentUser([userData, cardsList]);
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+  }, []);
 
   //Объявляем константы для пропсов PopupWithForm
   const editProfilePopupChildren = (
@@ -67,25 +90,29 @@ function App() {
   }
 
   //Возвращаем разметку всей страницы
+  //Предварительно оборачваем все компоненты в провайдер контекста
+  //Чтобы во всех них был доступен контекст
   return (
-    <div className="App">
-      <div className="page">
-      <Header/>
-      <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
-      <Footer/>
-      <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
-        {editProfilePopupChildren}
-      </PopupWithForm>
-      <PopupWithForm name='place' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
-        {addPlacePopupChildren}
-      </PopupWithForm>
-      <PopupWithForm name='delete' title='Вы уверены?' onClose={closeAllPopups} buttonText={'Да'}/>
-      <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
-        {editAvatarPopupChildren}
-      </PopupWithForm>
-      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+        <div className="page">
+        <Header/>
+        <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
+        <Footer/>
+        <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+          {editProfilePopupChildren}
+        </PopupWithForm>
+        <PopupWithForm name='place' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+          {addPlacePopupChildren}
+        </PopupWithForm>
+        <PopupWithForm name='delete' title='Вы уверены?' onClose={closeAllPopups} buttonText={'Да'}/>
+        <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+          {editAvatarPopupChildren}
+        </PopupWithForm>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+        </div>
       </div>
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 
