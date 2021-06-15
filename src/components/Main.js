@@ -28,15 +28,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
         <button aria-label="Добавить новое фото" type="button" className="profile__new-photo-button" onClick={onAddPlace}></button>
       </section>
 
-      <section className="content-gallery">
-        <ul className="content-gallery__cards">
-          {cards.map((card) => {
-            return (
-            <Card card={card} key={card._id} onCardClick={onCardClick}/>
-            );
-          })}
-        </ul>
-      </section>
+      <Card />
     </main>
   );
 }
