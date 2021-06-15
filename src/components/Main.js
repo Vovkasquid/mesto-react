@@ -6,9 +6,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   //Подписываемся на контекст
   const currentUser = React.useContext(CurrentUserContext);
   //Забираем из контекста объект данных пользователя
-  const [userInformation] = currentUser;
-  //Объявляем переменные состояния
-  const [cards, setCards] = React.useState([]);
+  const [userInformation, cards] = currentUser;
 
   return (
     <main className="content">
@@ -28,7 +26,15 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
         <button aria-label="Добавить новое фото" type="button" className="profile__new-photo-button" onClick={onAddPlace}></button>
       </section>
 
-      <Card />
+      <section className="content-gallery">
+        <ul className="content-gallery__cards">
+          {cards && cards.map((card) => {
+            return (
+              <Card card={card} key={card._id} onCardClick={onCardClick}/>
+            );
+          })}
+        </ul>
+      </section>
     </main>
   );
 }
