@@ -4,6 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 import React from 'react';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -32,15 +33,6 @@ function App() {
   }, []);
 
   //Объявляем константы для пропсов PopupWithForm
-  const editProfilePopupChildren = (
-    <>
-      <input type="text" name="editProfileName" id="name-input" className="edit-form__info-input edit-form__info-input_type_name" placeholder="Имя"  required minLength="2" maxLength="40"/>
-      <span className="edit-form__error-text name-input-error"></span>
-      <input type="text" name="editProfileDescription" id="description-input" className="edit-form__info-input edit-form__info-input_type_description" placeholder="Описание"  required minLength="2" maxLength="200"/>
-      <span className="edit-form__error-text description-input-error"></span>
-    </>
-  );
-
   const addPlacePopupChildren = (
     <>
       <input type="text" name="editPlaceName" id="place-input" className="edit-form__info-input edit-form__info-input_type_place" placeholder="Название"  required minLength="2" maxLength="30"/>
@@ -93,9 +85,7 @@ function App() {
         <Header/>
         <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
         <Footer/>
-        <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
-          {editProfilePopupChildren}
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
         <PopupWithForm name='place' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
           {addPlacePopupChildren}
         </PopupWithForm>
