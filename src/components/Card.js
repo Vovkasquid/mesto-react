@@ -1,7 +1,7 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card({card, onCardClick, onCardLike}) {
+function Card({card, onCardClick, onCardLike, onCardDelete}) {
   const currentUser = React.useContext(CurrentUserContext);
   //Вытаскиваем данные пользователя из контекста
   const userInfo = currentUser;
@@ -21,7 +21,7 @@ function Card({card, onCardClick, onCardLike}) {
           <p className="card__like-counter">{card.likes.length}</p>
         </div>
       </div>
-      {isThisCardMine && (<button aria-label="Удалить место" type="button" className="card__delete-button"></button>)}
+      {isThisCardMine && (<button aria-label="Удалить место" type="button" className="card__delete-button" onClick={() => onCardDelete(card)}></button>)}
     </li>
   );
 }
