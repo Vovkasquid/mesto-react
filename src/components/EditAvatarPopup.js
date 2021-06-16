@@ -1,21 +1,28 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function EditAvatarPopup({isOpen, onClose}) {
+function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+  //Создаём ref для инпута
+  const inputRef = React.createRef();
+
   //Переменная, для наполнения разметки
-  const addPlacePopupChildren = (
+  const editAvatarPopupChildren = (
     <>
-      <input type="text" name="editPlaceName" id="place-input" className="edit-form__info-input edit-form__info-input_type_place" placeholder="Название"  required minLength="2" maxLength="30"/>
-      <span className="edit-form__error-text place-input-error"></span>
-      <input type="url" name="editLinkPlace" id="url-input" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на картинку"  required/>
-      <span className="edit-form__error-text url-input-error"></span>
+      <input type="url" ref={inputRef} name="editLinkAvatar" id="url-input-avatar" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на аватар"  required/>
+      <span className="edit-form__error-text url-input-avatar-error"></span>
     </>
   );
 
+  //Обработчик самбима аватары
+  function handleSubmit(event) {
+    event.preventDefault();
+    //Дёргаем колбек обновления аватары
+    onUpdateAvatar(inputRef.current.value);
+  }
+
   return (
-    <PopupWithForm name='place' title='Новое место' isOpen={isOpen} onClose={onClose} buttonText={'Сохранить'}>
-      {addPlacePopupChildren}
+    <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isOpen} onClose={onClose} buttonText={'Сохранить'} onSubmit={handleSubmit}>
+      {editAvatarPopupChildren}
     </PopupWithForm>
   );
 }

@@ -34,14 +34,16 @@ function App() {
   }, []);
 
   //Объявляем константы для пропсов PopupWithForm
-
-
-  const editAvatarPopupChildren = (
+  const addPlacePopupChildren = (
     <>
-      <input type="url" name="editLinkAvatar" id="url-input-avatar" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на аватар"  required/>
-      <span className="edit-form__error-text url-input-avatar-error"></span>
+      <input type="text" name="editPlaceName" id="place-input" className="edit-form__info-input edit-form__info-input_type_place" placeholder="Название"  required minLength="2" maxLength="30"/>
+      <span className="edit-form__error-text place-input-error"></span>
+      <input type="url" name="editLinkPlace" id="url-input" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на картинку"  required/>
+      <span className="edit-form__error-text url-input-error"></span>
     </>
   );
+
+
 
   //Колбеки открытия поппов редактирования Аватара, профиля и добавления нового места
   const handleEditAvatarClick = () => {
@@ -68,6 +70,7 @@ function App() {
   const handleCardClick = (card) => {
     setSelectedCard(card);
   }
+
   //Обработчик обновления данных пользователя
   const handleUpdateUser = (userName, userAbout) => {
     api.editProfile(userName, userAbout)
@@ -77,6 +80,17 @@ function App() {
         //Закрываем попап
         closeAllPopups();
     })
+      .catch((err)=>{
+        console.log(err);
+    });
+  }
+
+  const handleUpdateAvatar = (avatar) => {
+    api.editAvatar(avatar)
+      .then(userData => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
       .catch((err)=>{
         console.log(err);
     });
@@ -93,12 +107,12 @@ function App() {
         <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick} />
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <EditAvatarPopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
-
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+          <PopupWithForm name='place' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
+            {addPlacePopupChildren}
+          </PopupWithForm>
         <PopupWithForm name='delete' title='Вы уверены?' onClose={closeAllPopups} buttonText={'Да'} />
-        <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
-          {editAvatarPopupChildren}
-        </PopupWithForm>
+
         <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
         </div>
       </div>
