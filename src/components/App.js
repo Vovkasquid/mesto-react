@@ -15,22 +15,16 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState([0,0]);
+  const [currentUser, setCurrentUser] = React.useState({});
 
   //При монтировании компонента вызовется этот хук
   //В нём произведём запрос на сервер, чтобы получить новые данные
   React.useEffect(() => {
-    Promise.all([
-      //Передаём Массив промисов, которые необходимо выполнить
-      //Ответ будет в массиве данных, по порядку написания промисов
-      //Но не по порядку их выполнения
-      api.getUserInformation(),
-      api.getInitialCards()
-    ])
-      .then(([userData, cardsList])=>{
+      api.getUserInformation()
+      .then(userData => {
         //Попадаем сюда, только когда оба промиса будут выполнены
         //Записывам полученные данные промиса в стейт currentUser
-        setCurrentUser([userData, cardsList]);
+        setCurrentUser(userData);
       })
       .catch((err)=>{
         console.log(err);

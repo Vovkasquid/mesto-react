@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function Card({card, onCardClick}) {
   const currentUser = React.useContext(CurrentUserContext);
   //Вытаскиваем данные пользователя из контекста
-  const [userInfo] = currentUser;
+  const userInfo = currentUser;
   //Проверяем наша ли карточка
   const isThisCardMine = userInfo._id === card.owner._id;
   //Проверяем есть ли наш лайк
