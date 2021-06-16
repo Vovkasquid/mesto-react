@@ -13,15 +13,23 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
     </>
   );
 
+  //Выставляем правильные данные при закрытии попапа
+  const onCloseHandler = () => {
+    inputRef.current.value = '';
+    onClose();
+  }
+
   //Обработчик самбима аватары
   function handleSubmit(event) {
     event.preventDefault();
     //Дёргаем колбек обновления аватары
     onUpdateAvatar(inputRef.current.value);
+    //Очищаем поле после закрытия
+    inputRef.current.value = '';
   }
 
   return (
-    <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isOpen} onClose={onClose} buttonText={'Сохранить'} onSubmit={handleSubmit}>
+    <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isOpen} onClose={onCloseHandler} buttonText={'Сохранить'} onSubmit={handleSubmit}>
       {editAvatarPopupChildren}
     </PopupWithForm>
   );

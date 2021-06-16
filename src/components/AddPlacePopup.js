@@ -18,9 +18,9 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
   //Объявляем константу для пропсов PopupWithForm
   const addPlacePopupChildren = (
     <>
-      <input type="text" name="editPlaceName" id="place-input" className="edit-form__info-input edit-form__info-input_type_place" placeholder="Название"  required minLength="2" maxLength="30" onChange={onPlaceChange}/>
+      <input type="text" name="editPlaceName" id="place-input" className="edit-form__info-input edit-form__info-input_type_place" placeholder="Название"  required minLength="2" maxLength="30"  value={place || ''} onChange={onPlaceChange}/>
       <span className="edit-form__error-text place-input-error"></span>
-      <input type="url" name="editLinkPlace" id="url-input" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на картинку"  required onChange={onLinkChange}/>
+      <input type="url" name="editLinkPlace" id="url-input" className="edit-form__info-input edit-form__info-input_type_link" placeholder="Ссылка на картинку"  required  value={link || ''} onChange={onLinkChange}/>
       <span className="edit-form__error-text url-input-error"></span>
     </>
   );
@@ -32,10 +32,20 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
     // Передаём значения управляемых компонентов во внешний обработчик
     onAddPlace(place, link);
+    //Очищаем поля
+    setPlace('');
+    setLink('');
+  }
+
+  //Выставляем правильные данные при закрытии попапа
+  const onCloseHandler = () => {
+    setPlace('');
+    setLink('');
+    onClose();
   }
 
   return (
-    <PopupWithForm name='place' title='Новое место' isOpen={isOpen} onClose={onClose} buttonText={'Сохранить'} onSubmit={handleSubmit}>
+    <PopupWithForm name='place' title='Новое место' isOpen={isOpen} onClose={onCloseHandler} buttonText={'Сохранить'} onSubmit={handleSubmit}>
       {addPlacePopupChildren}
     </PopupWithForm>
   );
