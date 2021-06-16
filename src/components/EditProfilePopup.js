@@ -25,6 +25,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
   function onChangeDescription(event) {
     setDescription(event.target.value);
   }
+
   //Обработчик сабмита
   function handleSubmit(event) {
     // Запрещаем браузеру переходить по адресу формы
