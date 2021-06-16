@@ -18,20 +18,53 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
+  //Инициализируем стейт с карточками
+  const [cards, setCards] = React.useState([]);
 
   //При монтировании компонента вызовется этот хук
   //В нём произведём запрос на сервер, чтобы получить новые данные
   React.useEffect(() => {
-      api.getUserInformation()
-      .then(userData => {
+    Promise.all([
+      //Передаём Массив промисов, которые необходимо выполнить
+      //Ответ будет в массиве данных, по порядку написания промисов
+      //Но не по порядку их выполнения
+      api.getUserInformation(),
+      api.getInitialCards()
+    ])
+      .then(([userData, cardsList])=>{
         //Попадаем сюда, только когда оба промиса будут выполнены
-        //Записывам полученные данные промиса в стейт currentUser
+        //Устанавливаем полученные данные пользователя
         setCurrentUser(userData);
+        //Передаём карточки в стейт cards
+        setCards(cardsList);
       })
       .catch((err)=>{
         console.log(err);
       })
   }, []);
+
+
+  //Обработчик постановки и удаления лайков
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch(err => console.log(err));
+  }
+
+  //Обработчик удаления карточки
+  const handleCardDelete = (card) => {
+    api.removeCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id))
+    })
+      .catch(err => console.log(err))
+  }
+
 
   //Объявляем константы для пропсов PopupWithForm
   const addPlacePopupChildren = (
@@ -104,7 +137,7 @@ function App() {
       <div className="App">
         <div className="page">
         <Header />
-        <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick} />
+        <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} cards={cards} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
