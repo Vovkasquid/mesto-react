@@ -6,6 +6,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   //Подписываемся на контекст
   const currentUser = React.useContext(CurrentUserContext);
+  //Инициализируем стейт с карточками
   const [cards, setCards] = React.useState([]);
 
   //При монтировании компонента вызовется этот хук
@@ -20,6 +21,16 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
         console.log(err);
       })
   }, []);
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+  }
 
   return (
     <main className="content">
@@ -43,7 +54,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
         <ul className="content-gallery__cards">
           {cards.map((card) => {
             return (
-              <Card card={card} key={card._id} onCardClick={onCardClick}/>
+              <Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={handleCardLike}/>
             );
           })}
         </ul>

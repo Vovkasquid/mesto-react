@@ -88,6 +88,11 @@ class Api {
     })
       .then(this._checkResponse);
   }
+
+  changeLikeCardStatus(cardID, isLiked) {
+    //Либо ставим лайк, либо снимаем его
+    return isLiked ? this.addLike(cardID) : this.removeLike(cardID) ;
+  }
 }
 
 const api = new Api({
