@@ -74,6 +74,19 @@ function App() {
   const handleCardClick = (card) => {
     setSelectedCard(card);
   }
+  //Обработчик обновления данных пользователя
+  const handleUpdateUser = (userName, userAbout) => {
+    api.editProfile(userName, userAbout)
+      .then(userData => {
+        //Высталяем локально новые данные
+        setCurrentUser(userData);
+        //Закрываем попап
+        closeAllPopups();
+    })
+      .catch((err)=>{
+        console.log(err);
+    });
+  }
 
   //Возвращаем разметку всей страницы
   //Предварительно оборачваем все компоненты в провайдер контекста
@@ -85,7 +98,7 @@ function App() {
         <Header/>
         <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
         <Footer/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
         <PopupWithForm name='place' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} buttonText={'Сохранить'}>
           {addPlacePopupChildren}
         </PopupWithForm>
