@@ -15,7 +15,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   //Обработчики введённых данных
   function onChangeName(event) {
@@ -35,13 +35,6 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
     onUpdateUser(name, description);
   }
 
-  //Выставляем правильные данные при закрытии попапа
-  const onCloseHandler = () => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-    onClose();
-  }
-
   //Константа с наполнением компонента
   const editProfilePopupChildren = (
     <>
@@ -53,7 +46,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
   );
 
   return (
-    <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isOpen} onClose={onCloseHandler} buttonText={'Сохранить'} onSubmit={handleSubmit}>
+    <PopupWithForm name='profile' title='Редактировать профиль' isOpen={isOpen} onClose={onClose} buttonText={'Сохранить'} onSubmit={handleSubmit}>
       {editProfilePopupChildren}
     </PopupWithForm>
   );
